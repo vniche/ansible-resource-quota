@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: Vinicius Niche Correa
+  description: Ansible Role for resource limiting in Enterprise Linux.
+
+  min_ansible_version: 2.2
+
+  - name: EL
+      versions:
+      - 7
+
+  galaxy_tags:
+    - resource
+    - quota
+    - devops
+    - cgroups
+    - centos
+    - rhel
+
+dependencies: []
