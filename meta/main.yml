@@ -5,9 +5,10 @@ galaxy_info:
 
   min_ansible_version: 2.2
 
-  - name: EL
+  platforms:
+    - name: EL
       versions:
-      - 7
+        - 7
 
   galaxy_tags:
     - resource
