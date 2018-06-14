@@ -1,2 +1,24 @@
 ---
-# tasks file for ansible-resource-quota
+- shell: systemctl set-property haproxy.service CPUAccounting=true CPUQuota=20% MemoryLimit=10M
+
+# ln -s /usr/lib/systemd/system/haproxy.service /etc/systemd/system/haproxy.service
+- file:
+    src: /usr/lib/systemd/system/haproxy.service
+    dest: /etc/systemd/system/haproxy.service
+    state: link
+
+- file:
+    path: /sys/fs/cgroup/memory/system.slice/haproxy.service
+    state: directory
+    mode: 0755
+
+# sed -i '/^ExecStart/a ExecStartPost=/bin/bash -c "echo 10M > /sys/fs/cgroup/memory/system.slice/haproxy.service/memory.limit_in_bytes"' /etc/systemd/system/haproxy.service
+- lineinfile:
+    path: /etc/systemd/system/haproxy.service
+    regexp: "ExecStartPost="
+    insertafter: "^ExecStart="
+    line: 'ExecStartPost=/bin/bash -c "echo 10M > /sys/fs/cgroup/memory/system.slice/haproxy.service/memory.limit_in_bytes"'
+
+# systemctl daemon-reload
+- systemd:
+    daemon_reload: yes
