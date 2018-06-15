@@ -21,4 +21,6 @@
 
 # systemctl daemon-reload
 - systemd:
+    name: haproxy
+    state: restarted
     daemon_reload: yes
